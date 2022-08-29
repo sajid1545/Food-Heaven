@@ -1,14 +1,14 @@
 let spinner = document.getElementById('spinner');
-// let toggleSpinner = (isTrue) => {
-// 	if (isTrue === true) {
-// 		spinner.classList.remove('d-none');
-// 	} else {
-// 		spinner.classList.add('d-none');
-// 	}
-// };
+let toggleSpinner = (isTrue) => {
+	if (isTrue === true) {
+		spinner.classList.remove('d-none');
+	} else {
+		spinner.classList.add('d-none');
+	}
+};
 
 let loadFoods = (searchText, foodLimit) => {
-	// toggleSpinner(true);
+	toggleSpinner(true);
 	let url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`;
 	fetch(url)
 		.then((res) => res.json())
@@ -16,9 +16,8 @@ let loadFoods = (searchText, foodLimit) => {
 };
 
 let displayFoods = (meals, foodLimit) => {
-	console.log(meals);
 	let foodContainer = document.getElementById('food-container');
-	foodContainer.innerHTML = '';
+	foodContainer.textContent = '';
 
 	// display 10 food items
 	let showAll = document.getElementById('show-all');
@@ -30,9 +29,11 @@ let displayFoods = (meals, foodLimit) => {
 		showAll.classList.add('d-none');
 	}
 
+	console.log(meals.length);
+
 	// validation for Error message
 	let errorMessage = document.getElementById('error-message');
-	if (meals.length == 0) {
+	if (meals.length === 0) {
 		errorMessage.classList.remove('d-none');
 	} else {
 		errorMessage.classList.add('d-none');
@@ -77,4 +78,4 @@ document.getElementById('show-all-button').addEventListener('click', function (e
 	searchProcess();
 });
 
-loadFoods('fish');
+loadFoods('');
