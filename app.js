@@ -13,14 +13,26 @@ let displayFoods = (meals, foodLimit) => {
 	let foodContainer = document.getElementById('food-container');
 	foodContainer.innerHTML = '';
 
-	// validation for Erro message
+	// validation for Error message
 	let errorMessage = document.getElementById('error-message');
 	if (meals.length === 0) {
 		errorMessage.classList.remove('d-none');
+	}
+	// else {
+	// 	errorMessage.classList.add('d-none');
+	// }
+
+	// display 10 food items
+	let showAll = document.getElementById('show-all');
+
+	if (foodLimit && meals.length > 10) {
+		meals = meals.slice(0, 10);
+		showAll.classList.remove('d-none');
 	} else {
-		errorMessage.classList.add('d-none');
+		showAll.classList.add('d-none');
 	}
 
+	// display all meals
 	meals.forEach((meal) => {
 		console.log(meal);
 
@@ -39,3 +51,23 @@ let displayFoods = (meals, foodLimit) => {
 		foodContainer.appendChild(foodDiv);
 	});
 };
+
+let searchProcess = (foodLimit) => {
+	let searchField = document.getElementById('search-field');
+	let searchText = searchField.value;
+	loadFoods(searchText, foodLimit);
+};
+
+document.getElementById('search-btn').addEventListener('click', function (e) {
+	searchProcess(10);
+});
+
+document.getElementById('search-field').addEventListener('keypress', function (e) {
+	if (e.key === 'Enter') {
+		searchProcess(10);
+	}
+});
+
+document.getElementById('show-all-button').addEventListener('click', function (e) {
+	searchProcess();
+});
