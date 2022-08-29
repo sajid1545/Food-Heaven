@@ -1,34 +1,24 @@
 let spinner = document.getElementById('spinner');
-let toggleSpinner = (isTrue) => {
-	if (isTrue === true) {
-		spinner.classList.remove('d-none');
-	} else {
-		spinner.classList.add('d-none');
-	}
-};
+// let toggleSpinner = (isTrue) => {
+// 	if (isTrue === true) {
+// 		spinner.classList.remove('d-none');
+// 	} else {
+// 		spinner.classList.add('d-none');
+// 	}
+// };
 
 let loadFoods = (searchText, foodLimit) => {
-	toggleSpinner(true);
+	// toggleSpinner(true);
 	let url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`;
 	fetch(url)
 		.then((res) => res.json())
 		.then((data) => displayFoods(data.meals, foodLimit));
 };
 
-loadFoods('');
-
 let displayFoods = (meals, foodLimit) => {
+	console.log(meals);
 	let foodContainer = document.getElementById('food-container');
 	foodContainer.innerHTML = '';
-
-	// console.log(meals);
-	// validation for Error message
-	let errorMessage = document.getElementById('error-message');
-	if (meals.length > 0) {
-		errorMessage.classList.remove('d-none');
-	} else {
-		errorMessage.classList.add('d-none');
-	}
 
 	// display 10 food items
 	let showAll = document.getElementById('show-all');
@@ -38,6 +28,14 @@ let displayFoods = (meals, foodLimit) => {
 		showAll.classList.remove('d-none');
 	} else {
 		showAll.classList.add('d-none');
+	}
+
+	// validation for Error message
+	let errorMessage = document.getElementById('error-message');
+	if (meals.length == 0) {
+		errorMessage.classList.remove('d-none');
+	} else {
+		errorMessage.classList.add('d-none');
 	}
 
 	// display all meals
@@ -56,12 +54,10 @@ let displayFoods = (meals, foodLimit) => {
         `;
 		foodContainer.appendChild(foodDiv);
 	});
-	toggleSpinner(false);
+	// toggleSpinner(false);
 };
 
 let searchProcess = (foodLimit) => {
-	document.getElementById('spinner').style.display = 'block';
-
 	let searchField = document.getElementById('search-field');
 	let searchText = searchField.value;
 	loadFoods(searchText, foodLimit);
@@ -80,3 +76,5 @@ document.getElementById('search-field').addEventListener('keypress', function (e
 document.getElementById('show-all-button').addEventListener('click', function (e) {
 	searchProcess();
 });
+
+loadFoods('fish');
